@@ -1,6 +1,9 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <div v-if="error">
+    <div
+      class="text-center text-red-600 mb-2"
+      v-if="error"
+    >
       {{ error }}
     </div>
     <div>

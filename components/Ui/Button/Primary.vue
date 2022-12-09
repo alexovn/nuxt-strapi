@@ -23,7 +23,6 @@ const props = defineProps({
   type: {
     type: String,
     default: 'button',
-    required: true
   },
   text: {
     type: String,
