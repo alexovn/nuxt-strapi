@@ -20,6 +20,7 @@
           py-2.5
           w-full
           text-sm
+          rounded
         "
         :id="id"
         :name="label"

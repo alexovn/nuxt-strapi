@@ -1,24 +1,35 @@
 <template>
-  <div>
-    <div>
-      <NuxtLink to="#!">
-        App Logo
-      </NuxtLink>
+  <header class="bg-indigo-200">
+    <div class="container px-5 py-3 mx-auto flex justify-between items-center">
+      <div>
+        <NuxtLink to="#!">
+          Logo
+        </NuxtLink>
+      </div>
+      <div class="flex items-center">
+        <nav>
+          <ul class="flex">
+            <li class="
+              mx-3
+              hover:after:opacity-1
+              relative
+              after:block
+              after:absolute
+              after:w-full
+              after:h-0.5
+              after:opacity-0
+              after:bg-red-400
+            " v-for="link in menu" :key="link.id">
+              <NuxtLink class="block w-full" :to="link.link">
+                {{ link.name }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </nav>
+        <UiButtonPrimary class="ml-3" text="Logout" />
+      </div>
     </div>
-    <nav>
-      <ul>
-        <li
-          v-for="link in menu"
-          :key="link.id"
-        >
-          <NuxtLink :to="link.link">
-            {{ link.name }}
-          </NuxtLink>
-        </li>
-      </ul>
-    </nav>
-    <UiButtonPrimary text="Logout" />
-  </div>
+  </header>
 </template>
 
 <script setup>
