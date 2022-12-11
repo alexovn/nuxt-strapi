@@ -4,7 +4,7 @@
       <div>
         <div class="mb-3">
           <h1 class="text-4xl font-semibold">
-            Hello User
+            Hello {{ userName }}
           </h1>
         </div>
         <div class="max-w-lg">
@@ -19,5 +19,9 @@
 </template>
 
 <script setup>
+
+const user = useStrapiUser();
+
+const userName = user?.value.username;
 
 </script>

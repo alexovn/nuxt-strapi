@@ -26,13 +26,14 @@
             </li>
           </ul>
         </nav>
-        <UiButtonPrimary class="ml-3" text="Logout" />
+        <UiButtonPrimary @click="handleLogout" class="ml-3" text="Logout" />
       </div>
     </div>
   </header>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
 
 const menu = ref([
   {
@@ -51,5 +52,18 @@ const menu = ref([
     link: '#!'
   },
 ]);
+
+const router = useRouter();
+const { logout } = useStrapiAuth();
+
+const handleLogout = () => {
+
+  logout();
+
+  router.push({
+    name: 'index'
+  });
+
+};
 
 </script>

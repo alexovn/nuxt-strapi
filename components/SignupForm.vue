@@ -3,8 +3,8 @@
     <div>
       <UiFormInput
         class="[&:not(:first-child)]:mt-7"
-        id="name"
-        label="Name"
+        id="username"
+        label="Username"
         required
         v-model="name"
       />
@@ -30,18 +30,33 @@
 </template>
 
 <script setup>
-import useSignup from '~/composables/useSignup';
+import { useRouter } from 'vue-router';
+
+const emits = defineEmits([
+  'submit'
+]);
 
 const name = ref('');
 const email = ref('');
 const password = ref('');
 
-const handleSubmit = () => {
-  useSignup({
-    username: name.value,
-    email: email.value,
-    password: password.value
-  });
+const { register } = useStrapiAuth();
+const router = useRouter();
+
+const handleSubmit = async () => {
+  
+  try {
+    await register({
+      username: name.value,
+      email: email.value,
+      password: password.value
+    });
+
+    router.push({
+      name: 'profile'
+    });
+
+  } catch (e) {}
   
   name.value = '';
   email.value = '';

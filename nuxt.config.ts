@@ -10,4 +10,8 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+
+  modules: [
+    '@nuxtjs/strapi'
+  ]
 })

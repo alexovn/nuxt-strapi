@@ -20,7 +20,7 @@
           </div>
 
           <KeepAlive>
-            <component :is="currentForm"></component>
+            <component :is="currentForm" @submit="enterProfile"></component>
           </KeepAlive>
 
           <hr class="my-4" />
@@ -54,13 +54,21 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import LoginForm from '~/components/LoginForm.vue';
 import SignupForm from '~/components/SignupForm.vue';
 
 const currentForm = shallowRef(LoginForm);
+const router = useRouter();
 
 const changeForm = (form) => {
   currentForm.value = form;
+};
+
+const enterProfile = () => {
+  router.push({
+    name: 'profile'
+  });
 };
 
 </script>

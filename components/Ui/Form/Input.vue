@@ -13,7 +13,9 @@
       border-slate-300
       bg-white
       outline-0
-    ">
+    "
+    :class="[ disabled ? 'bg-slate-100' : '' ]"
+    >
       <input
         class="
           px-3
@@ -27,6 +29,7 @@
         :type="type"
         :placeholder="placeholder"
         :required="required"
+        :disabled="disabled"
 
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
@@ -60,6 +63,10 @@ const props = defineProps({
   id: {
     type: String,
     default: ''
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 });
 
