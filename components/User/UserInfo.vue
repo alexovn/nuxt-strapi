@@ -10,23 +10,25 @@
         <UiFormInput
           class="w-full"
           label="Username"
-          v-model="userObj.username"
+          v-model="_user.username"
         />
         <UiFormInput
           class="w-full"
           label="Email address"
           type="email"
-          v-model="userObj.email"
+          v-model="_user.email"
         />
       </div>
       <div class="flex w-full gap-x-8 [&:not(:last-child)]:mb-8">
         <UiFormInput
           class="w-full"
           label="First name"
+          v-model="_user.firstName"
         />
         <UiFormInput
           class="w-full"
           label="Last name"
+          v-model="_user.lastName"
         />
       </div>
     </div>
@@ -36,8 +38,9 @@
 <script setup>
 
 const user = useStrapiUser();
+const token = useStrapiToken();
 
-const userObj = {
+const _user = {
   username: user.value.username,
   email: user.value.email,
   firstName: user.value.firstName,
