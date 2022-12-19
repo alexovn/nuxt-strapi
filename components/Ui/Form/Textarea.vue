@@ -1,0 +1,77 @@
+<template>
+  <div>
+    <label
+      v-if="label"
+      :for="id"
+      class="flex text-xs"
+    >
+      {{ label }}
+      <span
+        v-if="required"
+        class="text-red-700"
+      >
+        *
+      </span>
+    </label>
+    <div
+      class="
+      mt-[0.2rem]
+      rounded
+      border
+      border-slate-300
+      bg-white
+      outline-0
+      flex
+      items-center
+      justify-between
+    "
+      :class="[ disabled ? 'bg-slate-100' : '' ]"
+    >
+      <textarea
+        class="px-3 py-2.5 w-full min-h-[10rem] text-sm rounded"
+        :id="id"
+        :name="label"
+        :placeholder="placeholder"
+        :required="required"
+        :disabled="disabled"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
+      ></textarea>
+    </div>
+  </div>
+</template>
+
+<script setup>
+
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: ''
+  },
+  label: {
+    type: String,
+    default: ''
+  },
+  placeholder: {
+    type: String,
+    default: ''
+  },
+  required: {
+    type: Boolean,
+    default: false
+  },
+  id: {
+    type: String,
+    default: ''
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  }
+});
+
+defineEmits([
+  'update:modelValue'
+]);
+
+</script>

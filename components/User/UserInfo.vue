@@ -17,6 +17,7 @@
           class="w-full"
           label="Email address"
           required="required"
+          disabled
           v-model="_user.email"
         />
         <UiFormPassword
@@ -24,6 +25,7 @@
           class="w-full"
           label="Password"
           required="required"
+          disabled
           v-model="password"
         />
       </div>
@@ -61,7 +63,7 @@ const password = ref(null);
 
 const _user = {
   username: user.value.username,
-  password: password,
+  password: password.value,
   email: user.value.email,
   firstName: user.value.firstName,
   lastName: user.value.lastName,
