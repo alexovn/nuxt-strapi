@@ -28,8 +28,7 @@
         :required="required"
         :disabled="disabled"
 
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+        v-model="value"
       >
     </div>
   </div>
@@ -68,11 +67,17 @@ const props = defineProps({
   }
 });
 
-defineEmits([
+const emit = defineEmits([
   'update:modelValue'
 ]);
 
-</script>
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit('update:modelValue', value);
+  }
+});
 
-<style>
-</style>
+</script>

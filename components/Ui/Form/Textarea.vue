@@ -34,8 +34,8 @@
         :placeholder="placeholder"
         :required="required"
         :disabled="disabled"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+
+        v-model="value"
       ></textarea>
     </div>
   </div>
@@ -70,8 +70,17 @@ const props = defineProps({
   }
 });
 
-defineEmits([
+const emit = defineEmits([
   'update:modelValue'
 ]);
+
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit('update:modelValue', value)
+  }
+});
 
 </script>

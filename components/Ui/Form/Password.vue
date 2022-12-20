@@ -37,8 +37,7 @@
 
         :type="type"
 
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+        v-model="value"
       >
       <button
         class="px-3 flex self-auto"
@@ -88,16 +87,23 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits([
+  'update:modelValue'
+]);
+
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit('update:modelValue', value);
+  }
+});
+
 const type = ref('password');
 
 const togglePasswordVisibility = () => {
   type.value = type.value === 'password' ? 'text' : 'password'
-}
+};
 
-defineEmits([
-  'update:modelValue'
-]);
 </script>
-
-<style>
-</style>
