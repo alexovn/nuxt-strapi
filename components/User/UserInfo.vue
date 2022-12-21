@@ -18,16 +18,6 @@
           disabled
           v-model="user.email"
         />
-        <UiFormPassword
-          id="password"
-          class="w-full"
-          label="Password"
-          required="required"
-          disabled
-          v-model="user.password"
-        />
-      </div>
-      <div class="flex w-full gap-x-8 [&:not(:last-child)]:mb-8">
         <UiFormInput
           id="username"
           class="w-full"
@@ -35,6 +25,16 @@
           required="required"
           v-model="user.username"
         />
+        <!-- <UiFormPassword
+          id="password"
+          class="w-full"
+          label="Password"
+          required="required"
+          disabled
+          v-model="user.password"
+        /> -->
+      </div>
+      <div class="flex w-full gap-x-8 [&:not(:last-child)]:mb-8">
         <UiFormInput
           id="firstName"
           class="w-full"

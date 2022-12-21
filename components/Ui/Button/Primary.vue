@@ -5,15 +5,22 @@
       py-2
       w-full
       h-full
+      flex
+      items-center
+      justify-center
       text-xs
       font-semibold
       rounded
       bg-blue-600
       text-white
       hover:bg-blue-400
+      active:bg-blue-500
     "
     :type="type">
-    {{ text }}
+    <slot name="icon" />
+    <span class="block mx-2">
+      {{ text }}
+    </span>
   </button>
 </template>
 
@@ -31,7 +38,3 @@ const props = defineProps({
 });
 
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <section class="my-5 rounded shadow bg-white">
+  <section class="rounded shadow bg-white">
     <form @submit.prevent="handleSubmit">
       <div class="flex items-center justify-between px-5 py-5 rounded-t bg-slate-100">
         <div>
@@ -27,11 +27,8 @@ import submitUserForm from "~/composables/submitUserForm";
 
 const user = useStrapiUser();
 
-const password = ref(null);
-
 const _user = ref({
   username: user.value.username,
-  password: password.value,
   email: user.value.email,
 
   firstName: user.value.firstName,
@@ -42,7 +39,7 @@ const _user = ref({
   country: user.value.country,
   postalCode: user.value.postalCode,
 
-  textarea: user.value.textarea,
+  textarea: user.value.textarea
 });
 
 const handleSubmit = () => {

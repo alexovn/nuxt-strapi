@@ -1,5 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  runtimeConfig: {
+    public: {
+      strapi: {
+        url: 'http://localhost:1337'
+      }
+    }
+  },
+
   css: [
     '@/assets/styles/index.scss'
   ],
@@ -12,6 +21,12 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@nuxtjs/strapi'
-  ]
+    '@nuxtjs/strapi',
+  ],
+
+  strapi: {
+    auth: {
+      populate: '*'
+    }
+  }
 })
