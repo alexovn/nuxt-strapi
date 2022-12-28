@@ -11,11 +11,9 @@
       text-xs
       font-semibold
       rounded
-      bg-blue-600
       text-white
-      hover:bg-blue-400
-      active:bg-blue-500
     "
+    :class="mods"
     :type="type">
     <slot name="icon" />
     <span class="block mx-2">
@@ -35,6 +33,16 @@ const props = defineProps({
     type: String,
     default: 'button'
   },
+  error: {
+    type: Boolean,
+    default: false
+  }
+});
+
+const mods = computed(() => {
+  return props.error
+    ? 'bg-red-500 hover:bg-red-300 active:bg-red-400'
+    : 'bg-blue-600 hover:bg-blue-400 active:bg-blue-500';
 });
 
 </script>
