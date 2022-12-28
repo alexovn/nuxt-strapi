@@ -1,9 +1,12 @@
 <template>
   <section class="px-5 rounded shadow bg-white">
     <div class="mt-[-4rem] mb-[3rem]">
-      <div class="mx-auto rounded-full w-60 h-60" :class="avatar === null ? 'bg-red-300' : ''">
-        <img v-if="avatar !== null" class="block rounded-full w-full object-cover"
-          :src="`${runtimeConfig.public.strapi.url}${avatar.url}`" alt="avatar">
+      <div class="mx-auto mb-5 rounded-full w-60 h-60" :class="user.avatar === null ? 'bg-red-300' : ''">
+        <img
+          class="block w-60 h-60 rounded-full object-cover"
+          :src="userAvatar"
+          alt="avatar"
+        >
       </div>
       <form ref="avatarForm" @submit.prevent="handleSubmit">
         <UiFormUpload @file-update="captureFile($event)" id="upload-avatar" text="Edit">
@@ -35,10 +38,9 @@ const runtimeConfig = useRuntimeConfig();
 
 const user = useStrapiUser();
 const token = useStrapiToken();
-const timestamp = new Date().getTime();
 
-const avatar = user.value?.avatar;
-const avatarForm = ref(null);
+const userAvatar = ref(`${runtimeConfig.public.strapi.url}${user.value?.avatar?.url}`);
+
 const userStats = ref([
   {
     id: 1,
@@ -59,9 +61,11 @@ const userStats = ref([
 
 const captureFile = async (e) => {
   const uploadedAvatar = e;
-  console.log(uploadedAvatar);
-
   const formData = new FormData();
+  const imgSrc = URL.createObjectURL(e);
+
+  userAvatar.value = imgSrc;
+
   formData.append('files', uploadedAvatar);
   formData.append('ref', 'plugin::users-permissions.user');
   formData.append('refId', user.value.id);
