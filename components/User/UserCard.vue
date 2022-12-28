@@ -8,12 +8,21 @@
           alt="avatar"
         >
       </div>
-      <form ref="avatarForm" @submit.prevent="handleSubmit">
-        <UiFormUpload @file-update="captureFile($event)" id="upload-avatar" text="Edit">
+      <form ref="avatarForm" @submit.prevent="deleteFile">
+        <UiFormUpload class="[&:not(:last-child)]:mb-3" @file-update="captureFile($event)" id="upload-avatar" text="Edit">
           <template #icon>
             <PencilIcon class="h-4 w-4 text-white" />
           </template>
         </UiFormUpload>
+        <!-- <UiButtonPrimary class="
+          [&:not(:last-child)]:mb-3
+          bg-red-500
+          hover:bg-red-300
+          active:bg-red-400
+          "
+          text="Delete"
+          type="submit"
+        /> -->
       </form>
     </div>
     <div class="my-[3rem]">
@@ -33,6 +42,7 @@
 
 <script setup>
 import { PencilIcon } from '@heroicons/vue/24/solid';
+import getUser from '~/composables/getUser';
 
 const runtimeConfig = useRuntimeConfig();
 
@@ -60,13 +70,10 @@ const userStats = ref([
 ]);
 
 const captureFile = async (e) => {
-  const uploadedAvatar = e;
+  const uploadedFile = e;
   const formData = new FormData();
-  const imgSrc = URL.createObjectURL(e);
 
-  userAvatar.value = imgSrc;
-
-  formData.append('files', uploadedAvatar);
+  formData.append('files', uploadedFile);
   formData.append('ref', 'plugin::users-permissions.user');
   formData.append('refId', user.value.id);
   formData.append('field', 'avatar');
@@ -80,5 +87,32 @@ const captureFile = async (e) => {
       body: formData
     });
   } catch (e) { };
-}
+
+  const data = await getUser();
+
+  return userAvatar.value = `${runtimeConfig.public.strapi.url}${data.avatar.url}`;
+};
+
+// const deleteFile = async () => {
+//   const id = user.value.avatar.id;
+//   const formData = new FormData();
+
+//   userAvatar.value = '';
+
+//   // formData.append('files', uploadedAvatar);
+//   formData.append('ref', 'plugin::users-permissions.user');
+//   formData.append('refId', user.value.id);
+//   formData.append('field', 'avatar');
+
+//   try {
+//     const res = await fetch(`${runtimeConfig.public.strapi.url}/api/upload/files/${id}`, {
+//       method: 'DELETE',
+//       headers: {
+//         Authorization: `Bearer ${token.value}`,
+//       },
+//       body: formData
+//     });
+//   } catch (e) { };
+  
+// };
 </script>
