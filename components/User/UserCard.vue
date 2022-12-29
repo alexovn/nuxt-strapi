@@ -1,26 +1,25 @@
 <template>
   <section class="px-5 rounded shadow bg-white">
     <div class="mt-[-4rem] mb-[3rem]">
-      <div class="mx-auto mb-5 rounded-full w-60 h-60" :class="user.avatar === null ? 'bg-red-300' : ''">
+
+      <div class="mx-auto mb-5 bg-red-300 rounded-full w-60 h-60">
         <img
-          v-if="userAvatar !== null"
           class="block w-60 h-60 rounded-full object-cover"
           :src="userAvatar"
           alt="avatar"
         >
       </div>
+
       <form ref="avatarForm">
-        <UiFormUpload class="[&:not(:last-child)]:mb-3" @file-update="captureFile($event)" id="upload-avatar" text="Edit">
+        <UiFormUpload class="[&:not(:last-child)]:mb-3" @file-update="captureFile($event)" id="upload-avatar"
+          text="Edit">
           <template #icon>
             <PencilIcon class="h-4 w-4 text-white" />
           </template>
         </UiFormUpload>
-        <UiButtonPrimary class="[&:not(:last-child)]:mb-3"
-          @click="deleteFile"
-          text="Delete"
-          error
-        />
+        <UiButtonPrimary class="[&:not(:last-child)]:mb-3" @click="deleteFile" text="Delete" error />
       </form>
+
     </div>
     <div class="my-[3rem]">
       <div class="flex items-center justify-between">
@@ -39,15 +38,21 @@
 
 <script setup>
 import { PencilIcon } from '@heroicons/vue/24/solid';
-import getUser from '~/composables/getUser';
 
 const runtimeConfig = useRuntimeConfig();
-
-const user = useStrapiUser();
 const token = useStrapiToken();
-const userData = ref(null);
+const { find } = useStrapi4()
 
-const userAvatar = ref(null);
+const { data, pending, refresh, error } = await useAsyncData(
+  'user',
+  () => find('users/me?populate=avatar')
+);
+
+const userAvatar = computed(() => {
+  return data.value.avatar !== null
+    ? `${runtimeConfig.public.strapi.url}${data.value.avatar.url}`
+    : '/img/default-avatar.svg'
+});
 
 const userStats = ref([
   {
@@ -73,7 +78,7 @@ const captureFile = async (e) => {
 
   formData.append('files', uploadedFile);
   formData.append('ref', 'plugin::users-permissions.user');
-  formData.append('refId', user.value.id);
+  formData.append('refId', data.value.id);
   formData.append('field', 'avatar');
 
   try {
@@ -86,22 +91,18 @@ const captureFile = async (e) => {
     });
   } catch (e) { };
 
-  const data = await getUser();
-
-  userData.value = data;
-
-  return userAvatar.value = `${runtimeConfig.public.strapi.url}${userData.value.avatar.url}`;
+  await refresh();
 };
 
 const deleteFile = async () => {
-  const avatarId = userData.value.avatar.id;
+  const avatarId = data.value.avatar?.id;
 
-  if(!avatarId) return;
+  if (!avatarId) return;
 
   const formData = new FormData();
 
   formData.append('ref', 'plugin::users-permissions.user');
-  formData.append('refId', user.value.id);
+  formData.append('refId', data.value.id);
   formData.append('field', 'avatar');
 
   try {
@@ -113,11 +114,7 @@ const deleteFile = async () => {
       body: formData
     });
   } catch (e) { };
-  
-  const data = await getUser();
 
-  userData.value = data;
-
-  return userAvatar.value = null;
+  await refresh();
 };
 </script>

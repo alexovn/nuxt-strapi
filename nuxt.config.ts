@@ -27,6 +27,9 @@ export default defineNuxtConfig({
   strapi: {
     auth: {
       populate: '*'
+    },
+    cookie: {
+      path: '/'
     }
   }
 })
