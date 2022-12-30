@@ -17,7 +17,13 @@
             <PencilIcon class="h-4 w-4 text-white" />
           </template>
         </UiFormUpload>
-        <UiButtonPrimary class="[&:not(:last-child)]:mb-3" @click="deleteFile" text="Delete" error />
+        <UiButtonPrimary
+          v-if="data.avatar !== null"
+          class="[&:not(:last-child)]:mb-3"
+          @click="deleteFile"
+          text="Delete"
+          error
+        />
       </form>
 
     </div>
@@ -38,6 +44,9 @@
 
 <script setup>
 import { PencilIcon } from '@heroicons/vue/24/solid';
+import { useUserStore } from '~/store/user.js';
+
+const store = useUserStore();
 
 const runtimeConfig = useRuntimeConfig();
 const token = useStrapiToken();
@@ -50,7 +59,7 @@ const { data, pending, refresh, error } = await useAsyncData(
 
 const userAvatar = computed(() => {
   return data.value.avatar !== null
-    ? `${runtimeConfig.public.strapi.url}${data.value.avatar.url}`
+    ? `${runtimeConfig.public.strapi.url}${data.value.avatar?.url}`
     : '/img/default-avatar.svg'
 });
 

@@ -22,6 +22,7 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxtjs/strapi',
+    '@pinia/nuxt'
   ],
 
   strapi: {

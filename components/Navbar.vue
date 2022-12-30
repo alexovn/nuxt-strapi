@@ -34,6 +34,9 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { useUserStore } from '~/store/user';
+
+const store = useUserStore();
 
 const menu = ref([
   {
