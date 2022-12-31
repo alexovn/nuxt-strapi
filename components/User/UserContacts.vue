@@ -6,7 +6,7 @@
       </h4>
     </div>
     <div>
-      <div class="[&:not(:last-child)]:mb-8">
+      <div class="[&:not(:last-child)]:mb-3 md:[&:not(:last-child)]:mb-5">
         <UiFormInput
           id="address"
           class="w-full"
@@ -14,22 +14,22 @@
           v-model="user.address"
         />
       </div>
-      <div class="[&:not(:last-child)]:mb-8 flex items-center gap-x-8">
+      <div class="[&:not(:last-child)]:mb-3 md:[&:not(:last-child)]:mb-5 md:flex items-center gap-x-8">
         <UiFormInput
           id="city"
-          class="w-full"
+          class="mb-3 w-full"
           label="City"
           v-model="user.city"
         />
         <UiFormInput
           id="country"
-          class="w-full"
+          class="mb-3 w-full"
           label="Country"
           v-model="user.country"
         />
         <UiFormInput
           id="postal-code"
-          class="w-full"
+          class="mb-3 w-full"
           label="Postal code"
           v-model="user.postalCode"
         />

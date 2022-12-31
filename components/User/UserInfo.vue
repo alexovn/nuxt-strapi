@@ -9,10 +9,10 @@
       </h4>
     </div>
     <div>
-      <div class="flex w-full gap-x-8 [&:not(:last-child)]:mb-8">
+      <div class="md:flex w-full gap-x-8 [&:not(:last-child)]:mb-3 md:[&:not(:last-child)]:mb-5">
         <UiFormInput
           id="email-address"
-          class="w-full"
+          class="[&:not(:last-child)]:mb-3 w-full"
           label="Email address"
           required="required"
           disabled
@@ -20,7 +20,7 @@
         />
         <UiFormInput
           id="username"
-          class="w-full"
+          class="[&:not(:last-child)]:mb-3 w-full"
           label="Username"
           required="required"
           v-model="user.username"
@@ -34,16 +34,16 @@
           v-model="user.password"
         /> -->
       </div>
-      <div class="flex w-full gap-x-8 [&:not(:last-child)]:mb-8">
+      <div class="md:flex w-full gap-x-8 [&:not(:last-child)]:mb-3 md:[&:not(:last-child)]:mb-5">
         <UiFormInput
           id="firstName"
-          class="w-full"
+          class="[&:not(:last-child)]:mb-3 w-full"
           label="First name"
           v-model="user.firstName"
         />
         <UiFormInput
           id="lastName"
-          class="w-full"
+          class="[&:not(:last-child)]:mb-3 w-full"
           label="Last name"
           v-model="user.lastName"
         />
