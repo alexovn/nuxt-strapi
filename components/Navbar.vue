@@ -26,14 +26,37 @@
             </li>
           </ul>
         </nav>
-        <div class="w-8 h-8 shrink-0 bg-red-300 rounded-full">
+        <div @click.stop="toggleDropdownMenu" class="relative w-8 h-8 shrink-0 bg-red-300 rounded-full">
           <img
             class="block w-8 h-8 rounded-full object-cover"
             :src="userAvatar"
             alt="avatar"
           >
+          <nav @click.stop v-show="isDropdownMenuActive" class="
+            mt-1.5
+            py-1.5
+            absolute
+            left-auto
+            right-0
+            top-full
+            min-w-max
+            bg-white rounded"
+          >
+            <ul>
+              <li
+                v-for="link in dropdownMenuList"
+                :key="link.id"
+              >
+                <a class="block px-5 py-1 w-full hover:bg-blue-400 hover:text-white" :href="link.link">
+                  {{ link.name }}
+                </a>
+              </li>
+            </ul>
+            <div class="mt-2 px-2">
+              <UiButtonPrimary @click="handleLogout" text="Logout" />
+            </div>
+          </nav>
         </div>
-        <UiButtonPrimary @click="handleLogout" class="ml-3" text="Logout" />
       </div>
     </div>
   </header>
@@ -47,6 +70,7 @@ const store = useUserStore();
 const router = useRouter();
 const { logout } = useStrapiAuth();
 const runtimeConfig = useRuntimeConfig();
+const isDropdownMenuActive = ref(false);
 
 const menu = ref([
   {
@@ -65,6 +89,35 @@ const menu = ref([
     link: '#!'
   },
 ]);
+
+const dropdownMenuList = ref([
+  {
+    id: 1,
+    name: 'Your profile',
+    link: '#'
+  },
+  {
+    id: 2,
+    name: 'Settings',
+    link: '#'
+  }
+]);
+
+const toggleDropdownMenu = () => {
+  isDropdownMenuActive.value = !isDropdownMenuActive.value;
+};
+
+const closeDropdownMenu = () => {
+  isDropdownMenuActive.value = false;
+};
+
+onMounted(() => {
+  document.addEventListener('click', closeDropdownMenu);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', closeDropdownMenu);
+});
 
 const { data, pending, refresh, error } = await useAsyncData(
   'user',
