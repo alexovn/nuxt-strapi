@@ -26,7 +26,10 @@
             </li>
           </ul>
         </nav>
-        <div @click.stop="toggleDropdownMenu" class="relative w-8 h-8 shrink-0 bg-red-300 rounded-full">
+        <div
+          @click.stop="toggleDropdownMenu"
+          class="relative w-8 h-8 shrink-0 bg-red-300 rounded-full cursor-pointer"
+        >
           <img
             class="block w-8 h-8 rounded-full object-cover"
             :src="userAvatar"
@@ -47,9 +50,9 @@
                 v-for="link in dropdownMenuList"
                 :key="link.id"
               >
-                <a class="block px-5 py-1 w-full hover:bg-blue-400 hover:text-white" :href="link.link">
+                <NuxtLink class="block px-5 py-1 w-full hover:bg-blue-400 hover:text-white" :to="link.link">
                   {{ link.name }}
-                </a>
+                </NuxtLink>
               </li>
             </ul>
             <div class="mt-2 px-2">
@@ -94,7 +97,7 @@ const dropdownMenuList = ref([
   {
     id: 1,
     name: 'Your profile',
-    link: '#'
+    link: '/profile'
   },
   {
     id: 2,
