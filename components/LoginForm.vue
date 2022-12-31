@@ -23,12 +23,6 @@ const store = useUserStore();
 const email = ref('');
 const password = ref('');
 const error = ref(null);
-
-const { data } = await useAsyncData(
-  'user',
-  () => find('users/me?populate=avatar')
-);
-
 const { login } = useStrapiAuth();
 
 const handleSubmit = async () => {
@@ -45,7 +39,6 @@ const handleSubmit = async () => {
     error.value = null;
 
     emits('submit');
-    
   } catch (e) {
     error.value = 'Invalid login credentials';
   }

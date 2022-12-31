@@ -26,6 +26,13 @@
             </li>
           </ul>
         </nav>
+        <div class="w-8 h-8 shrink-0 bg-red-300 rounded-full">
+          <img
+            class="block w-8 h-8 rounded-full object-cover"
+            :src="userAvatar"
+            alt="avatar"
+          >
+        </div>
         <UiButtonPrimary @click="handleLogout" class="ml-3" text="Logout" />
       </div>
     </div>
@@ -37,6 +44,9 @@ import { useRouter } from 'vue-router';
 import { useUserStore } from '~/store/user';
 
 const store = useUserStore();
+const router = useRouter();
+const { logout } = useStrapiAuth();
+const runtimeConfig = useRuntimeConfig();
 
 const menu = ref([
   {
@@ -56,8 +66,16 @@ const menu = ref([
   },
 ]);
 
-const router = useRouter();
-const { logout } = useStrapiAuth();
+const { data, pending, refresh, error } = await useAsyncData(
+  'user',
+  () => find('users/me?populate=avatar')
+);
+
+const userAvatar = computed(() => {
+  return data.value.avatar !== null
+    ? `${runtimeConfig.public.strapi.url}${data.value.avatar?.url}`
+    : '/img/default-avatar.svg';
+});
 
 const handleLogout = () => {
 
