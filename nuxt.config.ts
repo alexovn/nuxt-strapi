@@ -30,10 +30,12 @@ export default defineNuxtConfig({
   },
 
   strapi: {
+    url: 'https://seashell-app-qniep.ondigitalocean.app',
     auth: {
       populate: '*'
     },
     cookie: {
+      sameSite: true,
       path: '/'
     }
   }
