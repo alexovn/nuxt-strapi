@@ -25,6 +25,10 @@ export default defineNuxtConfig({
     '@pinia/nuxt'
   ],
 
+  build: {
+    transpile: ['@heroicons/vue']
+  },
+
   strapi: {
     auth: {
       populate: '*'
