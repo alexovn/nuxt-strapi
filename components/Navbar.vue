@@ -43,7 +43,9 @@
             right-0
             top-full
             min-w-max
-            bg-white rounded"
+            bg-white rounded
+            shadow
+            "
           >
             <ul>
               <li
