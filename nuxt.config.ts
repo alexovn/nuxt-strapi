@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       strapi: {
-        url: 'http://localhost:1337'
+        url: 'https://seashell-app-qniep.ondigitalocean.app' // [LOCAL_SERVER] http://localhost:1337
       }
     }
   },
