@@ -2,12 +2,15 @@
   <section class="px-5 rounded shadow bg-white">
     <div class="mt-[-4rem] mb-[3rem]">
 
-      <div class="mx-auto mb-5 bg-red-300 rounded-full w-60 h-60">
+      <div class="mx-auto mb-5 flex items-center justify-center bg-red-300 rounded-full w-60 h-60">
         <img
+          v-if="!isLoading"
           class="block w-60 h-60 rounded-full object-cover"
           :src="userAvatar"
           alt="avatar"
         >
+
+        <UiLoading v-if="isLoading" />
       </div>
 
       <form ref="avatarForm">
@@ -44,24 +47,11 @@
 
 <script setup>
 import { PencilIcon } from '@heroicons/vue/24/solid';
-import { useUserStore } from '~/store/user.js';
-
-const store = useUserStore();
 
 const runtimeConfig = useRuntimeConfig();
 const token = useStrapiToken();
-const { find } = useStrapi4()
-
-const { data, pending, refresh, error } = await useAsyncData(
-  'user',
-  () => find('users/me?populate=avatar')
-);
-
-const userAvatar = computed(() => {
-  return data.value.avatar !== null
-    ? `${runtimeConfig.public.strapi.url}${data.value.avatar?.url}`
-    : '/img/default-avatar.svg'
-});
+const { find } = useStrapi4();
+const isLoading = ref(false);
 
 const userStats = ref([
   {
@@ -81,9 +71,22 @@ const userStats = ref([
   }
 ]);
 
+const { data, pending, refresh, error } = await useAsyncData(
+  'user',
+  () => find('users/me?populate=avatar')
+);
+
+const userAvatar = computed(() => {
+  return data.value.avatar !== null
+    ? `${runtimeConfig.public.strapi.url}${data.value.avatar?.url}`
+    : '/img/default-avatar.svg'
+});
+
 const captureFile = async (e) => {
   const uploadedFile = e;
   const formData = new FormData();
+  
+  isLoading.value = true;
 
   formData.append('files', uploadedFile);
   formData.append('ref', 'plugin::users-permissions.user');
@@ -98,9 +101,11 @@ const captureFile = async (e) => {
       },
       body: formData
     });
-  } catch (e) { };
 
+  } catch (e) { };
+  
   await refresh();
+  isLoading.value = false;
 };
 
 const deleteFile = async () => {

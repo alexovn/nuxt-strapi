@@ -38,5 +38,17 @@ export default defineNuxtConfig({
       sameSite: true,
       path: '/'
     }
+  },
+  
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
+            @import '@/assets/styles/_vars.scss';
+          `
+        }
+      }
+    }
   }
 })
