@@ -1,7 +1,8 @@
 const submitUserForm = async (_user) => {
   const token = useStrapiToken();
+  const runtimeConfig = useRuntimeConfig();
   
-  const res = await fetch("http://localhost:1337/api/user/me", {
+  const res = await fetch(`${runtimeConfig.pubic.strapi.url}/api/user/me`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token.value}`,
