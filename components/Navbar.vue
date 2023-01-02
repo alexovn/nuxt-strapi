@@ -9,27 +9,26 @@
         </NuxtLink>
       </div>
       <div
-        class="absolute px-3 py-3 w-full top-full left-0 md:static md:px-0 md:py-0 md:w-auto md:flex md:items-center md:bg-transparent bg-red-200 transition-transform"
-        :class="isMobileMenuActive ? 'translate-y-0' : '-translate-y-full'"
-      >
+        class="absolute px-3 py-3 w-full top-full left-0 md:static md:px-0 md:py-0 md:w-auto md:flex md:items-center md:bg-transparent bg-red-200 transition-transform md:transform-none md:transition-none"
+        :class="isMobileMenuActive ? 'translate-y-0' : '-translate-y-full'">
         <nav>
           <ul class="block w-full md:flex">
-            <li class="
-              md:mx-3
-              hover:after:opacity-1
-              relative
-              after:block
-              after:absolute
-              after:w-full
-              after:h-0.5
-              after:opacity-0
-              after:bg-red-400
-            " v-for="link in menu" :key="link.id">
+            <li class="md:mx-3 relative" v-for="link in menu" :key="link.id">
               <NuxtLink class="block w-full" :to="link.link">
                 {{ link.name }}
               </NuxtLink>
             </li>
           </ul>
+          <ul class="md:hidden">
+            <li v-for="link in dropdownMenuList" :key="link.id">
+              <NuxtLink class="block" :to="link.link">
+                {{ link.name }}
+              </NuxtLink>
+            </li>
+          </ul>
+          <div class="md:hidden mt-2">
+            <UiButtonPrimary @click="handleLogout" text="Logout" />
+          </div>
         </nav>
         <div @click.stop="toggleDropdownMenu"
           class="hidden md:block relative w-8 h-8 shrink-0 bg-red-300 rounded-full cursor-pointer">
