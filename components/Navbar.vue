@@ -1,16 +1,21 @@
 <template>
-  <header class="bg-indigo-200">
-    <div class="container px-5 py-3 mx-auto flex justify-between items-center">
-      <div>
+  <header class="sticky top-0 z-10 w-full md:static bg-indigo-200">
+    <div
+      class="container max-w-full justify-end relative h-[3rem] px-5 py-3 mx-auto flex md:justify-between items-center bg-indigo-200">
+      <div
+        class="absolute z-10 top-0 left-0 w-full h-full flex items-center justify-center md:block md:static md:w-auto md:h-auto md:bg-transparent bg-indigo-200">
         <NuxtLink to="#!">
           Logo
         </NuxtLink>
       </div>
-      <div class="flex items-center">
+      <div
+        class="absolute px-3 py-3 w-full top-full left-0 md:static md:px-0 md:py-0 md:w-auto md:flex md:items-center md:bg-transparent bg-red-200 transition-transform"
+        :class="isMobileMenuActive ? 'translate-y-0' : '-translate-y-full'"
+      >
         <nav>
-          <ul class="flex">
+          <ul class="block w-full md:flex">
             <li class="
-              mx-3
+              md:mx-3
               hover:after:opacity-1
               relative
               after:block
@@ -26,15 +31,9 @@
             </li>
           </ul>
         </nav>
-        <div
-          @click.stop="toggleDropdownMenu"
-          class="relative w-8 h-8 shrink-0 bg-red-300 rounded-full cursor-pointer"
-        >
-          <img
-            class="block w-8 h-8 rounded-full object-cover"
-            :src="userAvatar"
-            alt="avatar"
-          >
+        <div @click.stop="toggleDropdownMenu"
+          class="hidden md:block relative w-8 h-8 shrink-0 bg-red-300 rounded-full cursor-pointer">
+          <img class="block w-8 h-8 rounded-full object-cover" :src="userAvatar" alt="avatar">
           <nav @click.stop v-show="isDropdownMenuActive" class="
             mt-1.5
             py-1.5
@@ -45,13 +44,9 @@
             min-w-max
             bg-white rounded
             shadow
-            "
-          >
+            ">
             <ul>
-              <li
-                v-for="link in dropdownMenuList"
-                :key="link.id"
-              >
+              <li v-for="link in dropdownMenuList" :key="link.id">
                 <NuxtLink class="block px-5 py-1 w-full hover:bg-blue-400 hover:text-white" :to="link.link">
                   {{ link.name }}
                 </NuxtLink>
@@ -63,19 +58,21 @@
           </nav>
         </div>
       </div>
+      <button @click="toggleMenu" class="md:hidden z-10">
+        <span>button</span>
+      </button>
     </div>
   </header>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { useUserStore } from '~/store/user';
 
-const store = useUserStore();
 const router = useRouter();
 const { logout } = useStrapiAuth();
 const runtimeConfig = useRuntimeConfig();
 const isDropdownMenuActive = ref(false);
+const isMobileMenuActive = ref(false);
 
 const menu = ref([
   {
@@ -143,6 +140,10 @@ const handleLogout = () => {
     name: 'index'
   });
 
+};
+
+const toggleMenu = () => {
+  isMobileMenuActive.value = !isMobileMenuActive.value;
 };
 
 </script>

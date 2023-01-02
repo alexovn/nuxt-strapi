@@ -1,14 +1,14 @@
 <template>
   <section class="rounded shadow bg-white">
     <form @submit.prevent="handleSubmit">
-      <div class="flex items-center justify-between px-5 py-5 rounded-t bg-slate-100">
-        <div>
+      <div class="md:flex md:items-center md:justify-between px-5 py-5 rounded-t bg-slate-100">
+        <div class="mb-3 md:mb-0">
           <h3 class="text-xl font-semibold">
             My account
           </h3>
         </div>
         <UiButtonPrimary
-          class="max-w-[8rem]"
+          class="max-w-full md:max-w-[8rem]"
           type="submit"
           text="Update"
         />
@@ -42,7 +42,7 @@ const _user = ref({
   textarea: user.value.textarea
 });
 
-const handleSubmit = () => {
-  submitUserForm(_user.value);
+const handleSubmit = async() => {
+  await submitUserForm(_user.value);
 };
 </script>
